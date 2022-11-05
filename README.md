@@ -1,1 +1,1 @@
-# TrojanEat_Web
+# CSCI201 Final Project
