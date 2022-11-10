@@ -1,0 +1,13 @@
+spring:
+  datasource:
+    username: root
+    password: rootpwd
+    url: jdbc:mysql://localhost:3306/201Project
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auo: update org.hibernate.dialect.MySQL5Dialect
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL5Dialect
