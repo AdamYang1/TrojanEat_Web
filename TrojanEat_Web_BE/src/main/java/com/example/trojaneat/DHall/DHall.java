@@ -1,4 +1,4 @@
-package com.csci201_final_project.reactspringserver.model;
+package com.example.trojaneat.DHall;
 
 import javax.persistence.*;
 import java.util.ArrayList;

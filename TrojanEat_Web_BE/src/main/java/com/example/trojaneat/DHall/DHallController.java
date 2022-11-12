@@ -1,7 +1,5 @@
-package com.csci201_final_project.reactspringserver.controller;
+package com.example.trojaneat.DHall;
 
-import com.csci201_final_project.reactspringserver.model.DHall;
-import com.csci201_final_project.reactspringserver.respository.DHallRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,9 +9,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-@CrossOrigin(origins = "http://localhost:8081")
+@CrossOrigin(origins = "http://localhost:3000")
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/v1")
 public class DHallController {
 
     @Autowired
