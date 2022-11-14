@@ -1,13 +1,21 @@
 import React from 'react';
+import axios from 'axios';
 import { useState, useEffect } from "react";
 import Navbar from './Navbar'
 import Food from '../FoodOptions/Food';
 import { StarIcon } from '@heroicons/react/24/solid'
-import axios from 'axios';
 import DiningHall from "../DiningHall/DiningHall";
+import TopRecommended from "../DiningHall/TopRecommended";
 
 export default function Dashboard() {
     const name = 'Josh'
+    const village = {
+        "id" : 5,
+        "name" : "USC Village Dining Hall",
+        "img_url" : "https://hospitality.usc.edu/wp-content/uploads/2017/07/01_usc_village_dining_hall.jpg",
+        "open" : false
+    }
+
     const [diningHalls, setDiningHalls] = useState([]);
 
     useEffect(() => {
@@ -25,24 +33,14 @@ export default function Dashboard() {
     return(
     <div>
         <Navbar />
-        <div className='mx-auto max-w-7xl px-2 sm:px-6 lg:px-8'>
+        <div className='mx-auto max-w-7xl px-4 sm:px-6 lg:px-8'>
             <h1 className='text-3xl font-bold'>Hi {name}!👋</h1>
-            <div className='grid grid grid-cols-1 sm:grid-cols-2 gap-10'>
+            <div className='grid grid grid-cols-1 sm:grid-cols-2 sm:gap-10'>
                 <div>
-                    <h1 className='text-lg font-semibold pt-5 pb-2'>Top Recommended</h1>
-                    <img className='w-full rounded-lg' alt="USC Village Dining Hall" src='https://hospitality.usc.edu/wp-content/uploads/2017/07/01_usc_village_dining_hall.jpg'/>
-                    <div>
-                        <h1 className='text-lg font-semibold'>USC Village Dining Hall</h1>
-                        <div className='flex'>
-                            <StarIcon className='w-5 text-orange-300'/>
-                            <StarIcon className='w-5 text-orange-300'/>
-                            <StarIcon className='w-5 text-orange-300'/>
-                            <StarIcon className='w-5 text-orange-300'/>
-                            <StarIcon className='w-5 text-gray-300'/>
-                        </div>
-                    </div>
+                    <h1 className='text-lg font-bold pt-5 pb-2'>Top Recommended</h1>
+                    <TopRecommended props={village} />
                 </div>
-                <div className='sm: ml-5'>
+                <div className='sm:ml-5'>
                     <h1 className='text-lg font-semibold pt-5 pb-2'>Personalized Options</h1>
                     <div className='flex flex-col justify-between h-[280px]'>
                         <Food name={'Ice Cream'} category={'dairy'}/>
@@ -54,8 +52,8 @@ export default function Dashboard() {
                 </div>
             </div>
             <div>
-                <h1 className='text-lg font-semibold pt-5 pb-2'>Other Recommendations</h1>
-                <div className='flex overflow-x-scroll'>
+                <h1 className='text-lg font-bold pt-5 pb-2'>Other Recommendations</h1>
+                <div className='flex'>
                     {
                         diningHalls.map((hall,i) => <DiningHall key={i} props={hall}/>)
                     }
