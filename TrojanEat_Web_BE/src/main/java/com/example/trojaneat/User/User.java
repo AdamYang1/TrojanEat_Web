@@ -21,8 +21,8 @@ public class User {
     private String email;
     private String password;
     private String dh_rec;
-    private Integer beef;
     private Integer diary;
+    private Integer beef;
     private Integer eggs;
     private Integer shellfish;
     private Integer pork;
