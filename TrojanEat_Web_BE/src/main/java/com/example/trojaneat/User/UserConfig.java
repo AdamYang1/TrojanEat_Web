@@ -13,11 +13,11 @@ public class UserConfig {
         return args -> {
             User user1 = new User(1L, "adamyang@usc.edu", "adampwd",
                     "EVK", 1, 0, 0, 0, 0, 0,
-                    0, 0, 0, 2D, 0D, 0D);
+                    0, 0, 0, 2D, 0D, 0D,AURoles.USER);
             ;
             User user2 = new User(2L, "adamyang222@usc.edu", "adampwd22",
                     "EVK", 1, 0, 0, 0, 0, 0,
-                    0, 0, 0, 2D, 0D, 0D);
+                    0, 0, 0, 2D, 0D, 0D,AURoles.USER);
             repository.saveAll(List.of(user1, user2));
         };
 
