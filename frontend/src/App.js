@@ -12,9 +12,17 @@ import AuthPage from "./components/Auth/AuthPage";
 function App() {
   // const { token, setToken } = useToken();
 
+<<<<<<< HEAD
   // if (!token) {
   //   return <Login setToken={setToken} />;
   // }
+=======
+  const { token, setToken } = useToken();
+
+  /*if(!token) {
+    return <Login setToken={setToken} />
+  }*/
+>>>>>>> a1cf93ec0175bf5481248ad7a01de6620c27dada
 
   return (
     <div className="h-full">
