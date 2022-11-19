@@ -15,6 +15,7 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.4.3",
+    "react-script": "^2.0.5",
     "react-scripts": "5.0.1",
     "web-vitals": "^2.1.4"
   },
@@ -43,8 +44,10 @@
     ]
   },
   "devDependencies": {
+    "autoprefixer": "^10.4.13",
     "cors": "^2.8.5",
     "express": "^4.18.2",
-    "tailwindcss": "^3.2.1"
+    "postcss": "^8.4.19",
+    "tailwindcss": "^3.2.4"
   }
 }
