@@ -2,16 +2,16 @@ import React, { useContext } from "react";
 import Navbar from "./Navbar";
 import Food from "../FoodOptions/Food";
 import { StarIcon } from "@heroicons/react/24/solid";
-import AuthContext from "../../store/auth-context";
+// import AuthContext from "../../store/auth-context";
 
 const name = "Josh";
 
 export default function Dashboard() {
-  const authCtx = useContext(AuthContext);
-  const isLoggedIn = authCtx.isLoggedIn;
-  if (isLoggedIn) {
-    console.log("USER IS LOGGED IN!");
-  }
+  //   const authCtx = useContext(AuthContext);
+  //   const isLoggedIn = authCtx.isLoggedIn;
+  //   if (isLoggedIn) {
+  //     console.log("USER IS LOGGED IN!");
+  //   }
   return (
     <div>
       <Navbar />

@@ -3,8 +3,10 @@ import { LockClosedIcon } from "@heroicons/react/20/solid";
 import React from "react";
 import { useState, useContext } from "react";
 import AuthContext from "../../store/auth-context";
+import { useNavigate } from "react-router-dom";
 
 const AuthForm = () => {
+  const navigate = useNavigate();
   const [email, setUserName] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -44,11 +46,11 @@ const AuthForm = () => {
         returnSecureToken: true,
       }),
     })
-      .then((data) => {
-        if (data.ok) {
-          return data.json();
+      .then((res) => {
+        if (res.ok) {
+          return res.json();
         } else {
-          return data.json().then((data) => {
+          return res.json().then((data) => {
             let errorMessage = "Authentication failed!";
             if (data && data.error && data.error.message) {
               errorMessage = data.error.message;
@@ -59,9 +61,15 @@ const AuthForm = () => {
         }
       })
       .then((data) => {
-        // console.log(data);
+        // console.log(data.idToken);
         // set the token received from the firebase
         authCtx.login(data.idToken);
+        if (isLogin) {
+          navigate("/", { replace: true });
+        } else {
+          setIsLogin(true);
+          navigate("/Auth", { replace: true });
+        }
       })
       .catch((err) => {
         alert(err.message);

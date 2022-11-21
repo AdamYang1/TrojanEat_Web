@@ -1,37 +1,39 @@
-import React from "react";
+import React, { useContext } from "react";
 import "./App.css";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import {
+  BrowserRouter,
+  Navigate,
+  redirect,
+  Route,
+  Routes,
+} from "react-router-dom";
 import Dashboard from "./components/Dashboard/Dashboard";
 import Login from "./components/Login/Login";
 import useToken from "./components/useToken";
 import Signup from "./components/Signup/Signup";
-import { AuthContextProvider } from "./store/auth-context";
+import AuthContext, { AuthContextProvider } from "./store/auth-context";
 import AuthForm from "./components/Auth/AuthForm";
-import AuthPage from "./components/Auth/AuthPage";
 
 function App() {
   // const { token, setToken } = useToken();
 
-<<<<<<< HEAD
   // if (!token) {
   //   return <Login setToken={setToken} />;
   // }
-=======
-  const { token, setToken } = useToken();
-
-  /*if(!token) {
-    return <Login setToken={setToken} />
-  }*/
->>>>>>> a1cf93ec0175bf5481248ad7a01de6620c27dada
-
+  const ctx = useContext(AuthContext);
+  // console.log(ctx.isLoggedIn);
   return (
     <div className="h-full">
-      {/* <BrowserRouter> */}
-      <Routes>
-        <Route exact path="/" element={<Dashboard />} />
-        <Route path="/Auth" element={<AuthPage />} />
-      </Routes>
-      {/* </BrowserRouter> */}
+      <BrowserRouter>
+        <Routes>
+          <Route
+            exact
+            path="/"
+            element={ctx.isLoggedIn ? <Dashboard /> : <Navigate to="/Auth" />}
+          />
+          <Route path="/Auth" element={<AuthForm />} />
+        </Routes>
+      </BrowserRouter>
     </div>
   );
 }

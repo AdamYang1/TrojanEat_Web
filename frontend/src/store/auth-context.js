@@ -21,10 +21,10 @@ export const AuthContextProvider = (props) => {
     login: loginHandler,
     logout: logoutHandler,
   };
-  console.log(props.chilldren);
+  // console.log(props.children);
   return (
     <AuthContext.Provider value={contextValue}>
-      {props.chilldren}
+      {props.children}
     </AuthContext.Provider>
   );
 };
