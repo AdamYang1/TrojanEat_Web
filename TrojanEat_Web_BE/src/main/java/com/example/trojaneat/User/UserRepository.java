@@ -24,7 +24,8 @@ public interface UserRepository
     @Query("SELECT s FROM User s Where s.id = ?1")
     User findUserById(Long id);
 
-
+    @Query("SELECT s FROM User s WHERE s.email = ?1")
+    List<User> findUserByEmail(String email);
 
 }
 
