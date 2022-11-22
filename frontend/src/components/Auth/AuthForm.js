@@ -3,6 +3,7 @@ import React from "react";
 import { useState, useContext } from "react";
 import AuthContext from "../../store/auth-context";
 import { useNavigate } from "react-router-dom";
+import PrefContext from "../../store/pref-context";
 
 const AuthForm = () => {
   const navigate = useNavigate();
@@ -10,6 +11,7 @@ const AuthForm = () => {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const authCtx = useContext(AuthContext);
+  const prefContext = useContext(PrefContext);
   const [isLogin, setIsLogin] = useState(true);
 
   let error;
@@ -63,11 +65,17 @@ const AuthForm = () => {
         // console.log(data.idToken);
         // set the token received from the firebase
         authCtx.login(data.idToken);
-        if (isLogin) {
+
+        if (authCtx.isLoggedIn) {
           navigate("/", { replace: true });
         } else {
           setIsLogin(true);
+          prefContext.changeState(true);
           navigate("/Auth", { replace: true });
+        }
+        if (prefContext.userIsNew && authCtx.isLoggedIn) {
+          prefContext.changeState(false);
+          navigate("/Preferences", { replace: true });
         }
       })
       .catch((err) => {

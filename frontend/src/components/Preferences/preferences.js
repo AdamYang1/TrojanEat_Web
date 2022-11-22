@@ -1,3 +1,6 @@
-import React from "react";
+import Reacts from "react";
 
-// export
+function Prefernces() {
+  return <h2>Preferences page</h2>;
+}
+export default Prefernces;
