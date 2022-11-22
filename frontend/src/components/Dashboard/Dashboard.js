@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React from "react";
 import Navbar from "./Navbar";
 import Food from "../FoodOptions/Food";
 import { StarIcon } from "@heroicons/react/24/solid";
@@ -7,11 +7,6 @@ import { StarIcon } from "@heroicons/react/24/solid";
 const name = "Josh";
 
 export default function Dashboard() {
-  //   const authCtx = useContext(AuthContext);
-  //   const isLoggedIn = authCtx.isLoggedIn;
-  //   if (isLoggedIn) {
-  //     console.log("USER IS LOGGED IN!");
-  //   }
   return (
     <div>
       <Navbar />

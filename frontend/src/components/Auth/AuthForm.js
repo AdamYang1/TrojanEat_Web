@@ -1,4 +1,3 @@
-import PropTypes from "prop-types";
 import { LockClosedIcon } from "@heroicons/react/20/solid";
 import React from "react";
 import { useState, useContext } from "react";
