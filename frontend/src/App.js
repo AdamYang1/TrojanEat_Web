@@ -7,14 +7,10 @@ import AuthContext from "./store/auth-context";
 import AuthForm from "./components/Auth/AuthForm";
 
 function App() {
-  // const { token, setToken } = useToken();
 
-  // if (!token) {
-  //   return <Login setToken={setToken} />;
-  // }
   const ctx = useContext(AuthContext);
   return (
-    <div className="h-full">
+    <div className="h-screen dark:bg-slate-900">
       <BrowserRouter>
         <Routes>
           <Route

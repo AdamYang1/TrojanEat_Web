@@ -3,7 +3,6 @@ import axios from 'axios';
 import { useState, useEffect } from "react";
 import Navbar from './Navbar'
 import Food from '../FoodOptions/Food';
-import { StarIcon } from '@heroicons/react/24/solid'
 import DiningHall from "../DiningHall/DiningHall";
 import TopRecommended from "../DiningHall/TopRecommended";
 
@@ -16,10 +15,26 @@ export default function Dashboard() {
         "open" : false
     }
 
+    // menu GET request
+    const [menu, setMenu] = useState([]);
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const {data: response} = await axios.get('http://localhost:8080/api/v1/menu');
+                setMenu(response);
+            } catch (error) {
+                console.error(error.message);
+            }
+        }
+        fetchData();
+    }, []);
+
+    // dining hall GET request
     const [diningHalls, setDiningHalls] = useState([]);
 
     useEffect(() => {
-        const fetchData = async () =>{
+        const fetchData = async () => {
             try {
                 const {data: response} = await axios.get('http://localhost:8080/api/v1/dining-halls');
                 setDiningHalls(response);
@@ -31,29 +46,27 @@ export default function Dashboard() {
     }, []);
 
     return(
-    <div>
+    <div className='dark:bg-gray-900'>
         <Navbar />
         <div className='mx-auto max-w-7xl px-4 sm:px-6 lg:px-8'>
-            <h1 className='text-3xl font-bold'>Hi {name}!👋</h1>
-            <div className='grid grid grid-cols-1 sm:grid-cols-2 sm:gap-10'>
+            <h1 className='text-3xl font-bold ml-4 dark:text-white'>Hi {name}!👋</h1>
+            <div className='grid grid grid-cols-1 sm:grid-cols-2 sm:gap-10 pl-4'>
                 <div>
-                    <h1 className='text-lg font-bold pt-5 pb-2'>Top Recommended</h1>
+                    <h1 className='text-lg font-bold pt-5 pb-2 dark:text-white'>Top Recommended</h1>
                     <TopRecommended props={village} />
                 </div>
                 <div className='sm:ml-5'>
-                    <h1 className='text-lg font-semibold pt-5 pb-2'>Personalized Options</h1>
-                    <div className='flex flex-col justify-between h-[280px]'>
-                        <Food name={'Ice Cream'} category={'dairy'}/>
-                        <Food name={'Salad'} category={'vegan'}/>
-                        <Food name={'Sushi'} category={'fish'}/>
-                        <Food name={'Porkchops'} category={'pork'}/>
-                        <Food name={'Omelettes'} category={'eggs'}/>
+                    <h1 className='text-lg font-semibold pt-5 pb-2 dark:text-white'>Personalized Options</h1>
+                    <div className='flex flex-col h-[280px] overflow-y-scroll'>
+                        {
+                            menu.map((item) => <Food props={item}/>)
+                        }
                     </div>
                 </div>
             </div>
             <div>
-                <h1 className='text-lg font-bold pt-5 pb-2'>Other Recommendations</h1>
-                <div className='flex'>
+                <h1 className='text-lg font-bold pt-5 pl-4 dark:text-white'>Other Recommendations</h1>
+                <div className='flex overflow-x-scroll p-5 mt-2'>
                     {
                         diningHalls.map((hall,i) => <DiningHall key={i} props={hall}/>)
                     }
