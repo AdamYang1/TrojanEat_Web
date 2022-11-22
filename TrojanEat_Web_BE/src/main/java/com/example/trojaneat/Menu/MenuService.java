@@ -18,5 +18,6 @@ public class MenuService {
     public List<Menu> getAllMatchedMenu(String type, String date, String meal) {
         if(type == "beef")
             return menuRepository.findAllByBeef(date, meal);
+        return null;
     }
 }

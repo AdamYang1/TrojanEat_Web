@@ -13,7 +13,7 @@ public class Menu {
     // use integer instead of string to find breakfast, lunch, and dinner
     private Integer date_time;
     // same as above
-    private Integer dhall;
+//    private Integer dhall;
     private String date;
     private Integer diary;
     private Integer beef;
@@ -34,13 +34,13 @@ public class Menu {
     }
 
     public Menu(Long id, String food_name, Integer date_time,
-                Integer dhall, String date, Integer diary, Integer beef,
+                String dhall, String date, Integer diary, Integer beef,
                 Integer eggs, Integer shellfish, Integer pork, Integer chicken,
-                Integer fish, Integer seasame, Integer vegan, String dHall, String meal_time) {
+                Integer fish, Integer seasame, Integer vegan, String meal_time) {
         this.id = id;
         this.food_name = food_name;
         this.date_time = date_time;
-        this.dhall = dhall;
+        this.dHall = dHall;
         this.date = date;
         this.diary = diary;
         this.beef = beef;
@@ -87,13 +87,13 @@ public class Menu {
         this.date_time = date_time;
     }
 
-    public Integer getDhall() {
-        return dhall;
-    }
+//    public Integer getDhall() {
+//        return dhall;
+//    }
 
-    public void setDhall(Integer dhall) {
-        this.dhall = dhall;
-    }
+//    public void setDhall(Integer dhall) {
+//        this.dhall = dhall;
+//    }
 
     public Integer getDiary() {
         return diary;
@@ -189,7 +189,7 @@ public class Menu {
                 "id=" + id +
                 ", food_name='" + food_name + '\'' +
                 ", date_time=" + date_time +
-                ", dhall=" + dhall +
+                ", dhall=" + dHall +
                 ", diary=" + diary +
                 ", beef=" + beef +
                 ", eggs=" + eggs +
