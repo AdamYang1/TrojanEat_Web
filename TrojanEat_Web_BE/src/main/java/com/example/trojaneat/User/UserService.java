@@ -64,4 +64,39 @@ public class UserService {
             pref.put("Vegan:", user.getVegan());
         return pref;
     }
+
+    public void putUserPref(String email, List<String> pref) {
+        User user = userRepository.findUserByEmail(email).get(0);
+        user.setBeef(0);
+        user.setChicken(0);
+        user.setDiary(0);
+        user.setEggs(0);
+        user.setShellfish(0);
+        user.setPork(0);
+        user.setFish(0);
+        user.setSeasame(0);
+        user.setVegan(0);
+        for(String p: pref){
+            if(p.equals("beef"))
+                user.setBeef(1);
+            if(p.equals("chicken"))
+                user.setChicken(1);
+            if(p.equals("diary"))
+                user.setDiary(1);
+            if(p.equals("eggs"))
+                user.setEggs(1);
+            if(p.equals("shellfish"))
+                user.setShellfish(1);
+            if(p.equals("pork"))
+                user.setPork(1);
+            if(p.equals("fish"))
+                user.setFish(1);
+            if(p.equals("seasame"))
+                user.setSeasame(1);
+            if(p.equals("vegan"))
+                user.setVegan(1);
+        }
+        userRepository.save(user);
+//        return "Updated;"
+    }
 }

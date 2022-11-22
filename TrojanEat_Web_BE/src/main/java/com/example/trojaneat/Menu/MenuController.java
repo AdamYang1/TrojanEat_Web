@@ -20,10 +20,11 @@ public class MenuController {
     @GetMapping("/menu")
     public List<Menu> getAllMenu(){return menuService.getMenus();}
 
-    @GetMapping("/matchedMenu/type/{type}/Date/{date}/meal/{meal}")
+    @GetMapping("/matchedMenu/type/{type}/dh/{dh}/meal/{meal}")
     public List<Menu> getAllMatchedMenu(
-            @PathVariable("type") String type, @PathVariable("date") String date,
-            @PathVariable("meal") String meal) {
-        return menuService.getAllMatchedMenu(type, date, meal);
+            @PathVariable("type") String type,
+            @PathVariable("meal") String meal,
+            @PathVariable("dh") String dh) {
+        return menuService.getAllMatchedMenuByDh(type, meal, dh);
     }
 }
