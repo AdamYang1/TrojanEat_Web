@@ -1,19 +1,17 @@
-import { Fragment } from 'react'
-import { Disclosure, Menu, Transition } from '@headlessui/react'
-import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
+import { Fragment } from "react";
+import { Disclosure, Menu, Transition } from "@headlessui/react";
+import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
+import React from "react";
 
 function signOut() {
-    localStorage.removeItem('token');
+  localStorage.removeItem("token");
 }
 
-const navigation = [
-  { name: 'Home', href: '/', current: true }
-]
+const navigation = [{ name: "Home", href: "/", current: true }];
 
 function classNames(...classes) {
-  return classes.filter(Boolean).join(' ')
+  return classes.filter(Boolean).join(" ");
 }
-
 export default function Example() {
   return (
     <Disclosure as="nav" className="bg-white dark:bg-gray-800 mb-10">
@@ -44,7 +42,7 @@ export default function Example() {
                     src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/94/USC_Trojans_logo.svg/1373px-USC_Trojans_logo.svg.png"
                     alt="Your Company"
                   />
-                  <h1 className='ml-2 font-bold text-lg'>Dining</h1>
+                  <h1 className="ml-2 font-bold text-lg">Dining</h1>
                 </div>
                 <div className="hidden sm:ml-6 sm:block">
                   <div className="flex space-x-4 right-0">
@@ -53,10 +51,12 @@ export default function Example() {
                         key={item.name}
                         href={item.href}
                         className={classNames(
-                          item.current ? 'bg-white text-black dark:bg-gray-900 dark:text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white',
-                          'px-3 py-2 rounded-md text-sm font-medium'
+                          item.current
+                            ? "bg-white text-black dark:bg-gray-900 dark:text-white"
+                            : "text-gray-300 hover:bg-gray-700 hover:text-white",
+                          "px-3 py-2 rounded-md text-sm font-medium"
                         )}
-                        aria-current={item.current ? 'page' : undefined}
+                        aria-current={item.current ? "page" : undefined}
                       >
                         {item.name}
                       </a>
@@ -91,7 +91,10 @@ export default function Example() {
                         {({ active }) => (
                           <a
                             href="/"
-                            className={classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}
+                            className={classNames(
+                              active ? "bg-gray-100" : "",
+                              "block px-4 py-2 text-sm text-gray-700"
+                            )}
                           >
                             Preferences
                           </a>
@@ -101,7 +104,10 @@ export default function Example() {
                         {({ active }) => (
                           <a
                             href="/"
-                            className={classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}
+                            className={classNames(
+                              active ? "bg-gray-100" : "",
+                              "block px-4 py-2 text-sm text-gray-700"
+                            )}
                             onClick={signOut}
                           >
                             Sign out
@@ -123,10 +129,12 @@ export default function Example() {
                   as="a"
                   href={item.href}
                   className={classNames(
-                    item.current ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white',
-                    'block px-3 py-2 rounded-md text-base font-medium'
+                    item.current
+                      ? "bg-gray-900 text-white"
+                      : "text-gray-300 hover:bg-gray-700 hover:text-white",
+                    "block px-3 py-2 rounded-md text-base font-medium"
                   )}
-                  aria-current={item.current ? 'page' : undefined}
+                  aria-current={item.current ? "page" : undefined}
                 >
                   {item.name}
                 </Disclosure.Button>
@@ -136,5 +144,5 @@ export default function Example() {
         </>
       )}
     </Disclosure>
-  )
+  );
 }
