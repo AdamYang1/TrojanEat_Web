@@ -66,7 +66,8 @@ const AuthForm = () => {
         // set the token received from the firebase
         authCtx.login(data.idToken);
 
-        if (authCtx.isLoggedIn) {
+        if (isLogin) {
+          // prefContext.changeState(false);
           navigate("/", { replace: true });
         } else {
           setIsLogin(true);
