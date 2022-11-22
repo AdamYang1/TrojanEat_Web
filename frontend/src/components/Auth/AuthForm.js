@@ -56,18 +56,16 @@ const AuthForm = () => {
             if (data && data.error && data.error.message) {
               errorMessage = data.error.message;
             }
-            // console.log(data);
+
             throw new Error(errorMessage);
           });
         }
       })
       .then((data) => {
-        // console.log(data.idToken);
         // set the token received from the firebase
         authCtx.login(data.idToken);
 
         if (isLogin) {
-          // prefContext.changeState(false);
           navigate("/", { replace: true });
         } else {
           setIsLogin(true);
