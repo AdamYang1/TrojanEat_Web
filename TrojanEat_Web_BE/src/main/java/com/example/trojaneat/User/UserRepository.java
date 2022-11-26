@@ -27,5 +27,7 @@ public interface UserRepository
     @Query("SELECT s FROM User s WHERE s.email = ?1")
     List<User> findUserByEmail(String email);
 
+    @Query("SELECT s FROM User s WHERE s.email = ?1 AND s.password = ?2")
+    List<User> authUser(String email, String pwd);
 }
 

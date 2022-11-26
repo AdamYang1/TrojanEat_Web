@@ -24,6 +24,12 @@ public class UserController {
         return userService.getUserByEmail(email);
     }
 
+    @GetMapping("/auth/email/{email}/pwd/{pwd}")
+    public List<User> authUser(@PathVariable("email") String email,
+                               @PathVariable("pwd") String pwd){
+        return userService.authUser(email, pwd);
+    }
+
     @PostMapping("register/email/{email}/pwd/{pwd}")
     public void addUser(@PathVariable("email") String email,
                         @PathVariable("pwd") String pwd){

@@ -99,4 +99,8 @@ public class UserService {
         userRepository.save(user);
 //        return "Updated;"
     }
+
+    public List<User> authUser(String email, String pwd) {
+        return userRepository.authUser(email, pwd);
+    }
 }
