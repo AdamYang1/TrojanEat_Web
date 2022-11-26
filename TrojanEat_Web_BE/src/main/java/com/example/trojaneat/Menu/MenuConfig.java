@@ -10,7 +10,7 @@ import java.util.List;
 
 @Configuration
 public class MenuConfig {
-    @Bean
+    /*@Bean
     CommandLineRunner menu(MenuRepository repository) {
         return args -> {
             Menu food1 = new Menu(1L, "Grilled Beef", 2, "EVK", "2022-08-08", 1, 1, 0,
@@ -20,5 +20,5 @@ public class MenuConfig {
             repository.saveAll(List.of(food1, food2));
         };
 
-    }
+    }*/
 }
