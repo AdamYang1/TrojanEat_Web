@@ -26,60 +26,53 @@ const AuthForm = () => {
 
   const submitHandler = function (event) {
     event.preventDefault();
-    console.log(email, password, confirmPassword);
-
-    let url;
     if (isLogin) {
-      url =
-        "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyC61H9pnMsqoh9QPMtIMEjcV8X2D_-tTW0";
-    } else {
-      url =
-        "https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyC61H9pnMsqoh9QPMtIMEjcV8X2D_-tTW0";
-    }
-    fetch(url, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        email: email,
-        password: password,
-        returnSecureToken: true,
-      }),
-    })
-      .then((res) => {
-        if (res.ok) {
-          return res.json();
-        } else {
-          return res.json().then((data) => {
-            let errorMessage = "Authentication failed!";
-            if (data && data.error && data.error.message) {
-              errorMessage = data.error.message;
-            }
+      const checkAuth = async function () {
+        let url =
+          "http://trojans-eat.herokuapp.com/api/v1/user/auth/email/" +
+          email +
+          "/pwd/" +
+          password;
+        const res = await fetch(url);
+        const data = await res.json();
 
-            throw new Error(errorMessage);
-          });
+        if (data.length !== 0) {
+          authCtx.login(email);
+          if (!prefContext.userIsNew) {
+            navigate("/", { replace: true });
+          } else if (prefContext.userIsNew) {
+            prefContext.changeState(false);
+            navigate("/Preferences", { replace: true });
+          }
+        } else {
+          alert("Email and password do not match!");
         }
-      })
-      .then((data) => {
-        // set the token received from the firebase
-        authCtx.login(data.idToken);
+      };
+      checkAuth();
+    } else {
+      const checkRegister = async function () {
+        let url =
+          "http://trojans-eat.herokuapp.com/api/v1/user/getUser/email/" + email;
+        const res = await fetch(url);
+        const data = await res.json();
 
-        if (isLogin) {
-          navigate("/", { replace: true });
-        } else {
+        //if user is not regisetered
+        if (data.length === 0) {
+          url =
+            "http://trojans-eat.herokuapp.com/api/v1/user/register/email/" +
+            email +
+            /pwd/ +
+            password;
+          await fetch(url, { method: "POST" });
           setIsLogin(true);
           prefContext.changeState(true);
           navigate("/Auth", { replace: true });
+        } else {
+          alert("Email is already registered!");
         }
-        if (prefContext.userIsNew && authCtx.isLoggedIn) {
-          prefContext.changeState(false);
-          navigate("/Preferences", { replace: true });
-        }
-      })
-      .catch((err) => {
-        alert(err.message);
-      });
+      };
+      checkRegister();
+    }
   };
   // TailwindUI Template
 
@@ -101,7 +94,7 @@ const AuthForm = () => {
             <input type="hidden" name="remember" defaultValue="true" />
 
             {isLogin ? (
-              <div className="-space-y-px rounded-md shadow-sm">
+              <div className="-space-y-px rounded-md">
                 <div>
                   <label htmlFor="email-address" className="sr-only">
                     Email address
@@ -132,7 +125,7 @@ const AuthForm = () => {
                 />
               </div>
             ) : (
-              <div className="-space-y-px rounded-md shadow-sm">
+              <div className="-space-y-px rounded-md ">
                 <div>
                   <label htmlFor="email-address" className="sr-only">
                     Email address
@@ -144,6 +137,7 @@ const AuthForm = () => {
                     type="email"
                     autoComplete="email"
                     required
+                    pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
                     className="relative block w-full appearance-none rounded-none rounded-t-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-red-800 focus:outline-none focus:ring-red-800 sm:text-sm"
                     placeholder="Email address"
                   />
@@ -184,20 +178,7 @@ const AuthForm = () => {
             )}
 
             <div className="flex items-center justify-between">
-              <div className="flex items-center">
-                <input
-                  id="remember-me"
-                  name="remember-me"
-                  type={isLogin ? "checkbox" : "hidden"}
-                  className="h-4 w-4 rounded border-gray-300 text-red-800 focus:ring-red-800"
-                />
-                <label
-                  htmlFor="remember-me"
-                  className="ml-2 block text-sm text-gray-900"
-                >
-                  {isLogin ? "Remember me" : ""}
-                </label>
-              </div>
+              <div className="flex items-center"></div>
               <div className="text-sm">
                 <button
                   className="font-medium text-red-800 hover:text-yellow-500 transition"
