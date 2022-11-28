@@ -1,6 +1,11 @@
 import React from "react";
 
 function Prefernces() {
-  return <h2>Preferences page</h2>;
+  return (
+    <div>
+      <h2>Preferences page</h2>
+      <a href="/">Next</a>
+    </div>
+  );
 }
 export default Prefernces;

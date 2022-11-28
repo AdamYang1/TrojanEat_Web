@@ -8,11 +8,6 @@ import AuthForm from "./components/Auth/AuthForm";
 import Prefernces from "./components/Preferences/preferences";
 
 function App() {
-  // const { token, setToken } = useToken();
-
-  // if (!token) {
-  //   return <Login setToken={setToken} />;
-  // }
   const ctx = useContext(AuthContext);
 
   return (
@@ -24,6 +19,7 @@ function App() {
             path="/"
             element={ctx.isLoggedIn ? <Dashboard /> : <Navigate to="/Auth" />}
           />
+
           <Route path="/Auth" element={<AuthForm />} />
           <Route
             path="/Preferences"
