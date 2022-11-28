@@ -1,6 +1,6 @@
 import React from "react"
 import { useState, useContext } from "react";
-
+import { Link } from "react-router-dom";
 
 function Preferences() {
 
@@ -14,10 +14,6 @@ function Preferences() {
     const [isFishClicked, setisFishClicked] = useState(false);
     const [isSesameClicked, setisSesameClicked] = useState(false);
     const [isVeganClicked, setisVeganClicked] = useState(false);
-
-    const submitHandler = function (event) {
-        console.log("submitted");
-    }
 
     const onChangeBeef = () =>{
         console.log("clicked beef");
@@ -68,8 +64,34 @@ function Preferences() {
         console.log("clicked vegan");
         setisVeganClicked((prevState) => !prevState);
     }
-    
+
+    const submitHandler = function (event) {
+        console.log("submitted");
+
+        url = "https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyC61H9pnMsqoh9QPMtIMEjcV8X2D_-tTW0";
+        fetch(url, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              email: email,
+              password: password,
+              dairy: boolean(isBeefClicked),
+              beef: boolean(isDairyClicked),
+              eggs: boolean(isEggsClicked),
+              shellfish: boolean(isShellfishClicked),
+              pork: boolean(isPorkClicked),
+              chicken: boolean(isChickenClicked), 
+              fish: boolean(isFishClicked), 
+              sesame: boolean(isSesameClicked),
+              vegan: boolean(isVeganClicked)
+            }),
+          })
+    }
+
     return(
+        
         <div className = "flex min-h-full items-center justify-center mx-10 px-8 mt-20">
         <div className = "mx-8 max-w-7xl px-2 sm:px-6 lg:px-8">
             <h1 className = "text-3xl font-bold mx-8 my-2 mt-6 tracking-tight">Select Your Preferences</h1>
@@ -167,7 +189,7 @@ function Preferences() {
                         type="submit"
                         className="col-start-4 col-end-7 group relative flex w-full justify-center rounded-md border border-transparent bg-red-800 py-2 px-4 text-sm font-medium text-white hover:bg-red-800 focus:outline-none focus:ring-2 focus:ring-red-800 focus:ring-offset-2"
                     >
-                        Next
+                       Next
                     </button>
                 </div>
             </form>
