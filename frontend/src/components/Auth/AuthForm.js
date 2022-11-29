@@ -3,6 +3,7 @@ import React from "react";
 import { useState, useContext } from "react";
 import AuthContext from "../../store/auth-context";
 import { useNavigate } from "react-router-dom";
+import PrefContext from "../../store/pref-context";
 
 function setTheme() {
   if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
@@ -28,6 +29,7 @@ const AuthForm = () => {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const authCtx = useContext(AuthContext);
+  const prefContext = useContext(PrefContext);
   const [isLogin, setIsLogin] = useState(true);
 
   let error;
@@ -43,55 +45,53 @@ const AuthForm = () => {
   const submitHandler = function (event) {
     setTheme();
     event.preventDefault();
-    console.log(email, password, confirmPassword);
-
-    let url;
     if (isLogin) {
-      url =
-        "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyC61H9pnMsqoh9QPMtIMEjcV8X2D_-tTW0";
+      const checkAuth = async function () {
+        let url =
+          "http://trojans-eat.herokuapp.com/api/v1/user/auth/email/" +
+          email +
+          "/pwd/" +
+          password;
+        const res = await fetch(url);
+        const data = await res.json();
+
+        if (data.length !== 0) {
+          authCtx.login(email);
+          if (!prefContext.userIsNew) {
+            navigate("/", { replace: true });
+          } else if (prefContext.userIsNew) {
+            prefContext.changeState(false);
+            navigate("/Preferences", { replace: true });
+          }
+        } else {
+          alert("Email and password do not match!");
+        }
+      };
+      checkAuth();
     } else {
-      url =
-        "https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyC61H9pnMsqoh9QPMtIMEjcV8X2D_-tTW0";
-    }
-    fetch(url, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        email: email,
-        password: password,
-        returnSecureToken: true,
-      }),
-    })
-      .then((res) => {
-        if (res.ok) {
-          return res.json();
-        } else {
-          return res.json().then((data) => {
-            let errorMessage = "Authentication failed!";
-            if (data && data.error && data.error.message) {
-              errorMessage = data.error.message;
-            }
-            // console.log(data);
-            throw new Error(errorMessage);
-          });
-        }
-      })
-      .then((data) => {
-        // console.log(data.idToken);
-        // set the token received from the firebase
-        authCtx.login(data.idToken);
-        if (isLogin) {
-          navigate("/", { replace: true });
-        } else {
+      const checkRegister = async function () {
+        let url =
+          "http://trojans-eat.herokuapp.com/api/v1/user/getUser/email/" + email;
+        const res = await fetch(url);
+        const data = await res.json();
+
+        //if user is not regisetered
+        if (data.length === 0) {
+          url =
+            "http://trojans-eat.herokuapp.com/api/v1/user/register/email/" +
+            email +
+            /pwd/ +
+            password;
+          await fetch(url, { method: "POST" });
           setIsLogin(true);
+          prefContext.changeState(true);
           navigate("/Auth", { replace: true });
+        } else {
+          alert("Email is already registered!");
         }
-      })
-      .catch((err) => {
-        alert(err.message);
-      });
+      };
+      checkRegister();
+    }
   };
   // TailwindUI Template
 
@@ -113,7 +113,7 @@ const AuthForm = () => {
             <input type="hidden" name="remember" defaultValue="true" />
 
             {isLogin ? (
-              <div className="-space-y-px rounded-md shadow-sm">
+              <div className="-space-y-px rounded-md">
                 <div>
                   <label htmlFor="email-address" className="sr-only">
                     Email address
@@ -144,7 +144,7 @@ const AuthForm = () => {
                 />
               </div>
             ) : (
-              <div className="-space-y-px rounded-md shadow-sm">
+              <div className="-space-y-px rounded-md ">
                 <div>
                   <label htmlFor="email-address" className="sr-only">
                     Email address
@@ -156,7 +156,10 @@ const AuthForm = () => {
                     type="email"
                     autoComplete="email"
                     required
-                    className="relative block w-full appearance-none rounded-none rounded-t-md border border-gray-300 px-3 py-2 text-gray-900 dark:border-gray-700 dark:bg-gray-800 dark:text-white placeholder-gray-500 focus:z-10 focus:border-red-800 focus:outline-none focus:ring-red-800 sm:text-sm"
+
+                    pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
+                    className="relative block w-full appearance-none rounded-none rounded-t-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-red-800 focus:outline-none focus:ring-red-800 sm:text-sm"
+
                     placeholder="Email address"
                   />
                 </div>
