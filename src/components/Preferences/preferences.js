@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from "react";
+import {Link} from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 function Prefernces() {
+	const navigate = useNavigate();
 	const [isClicked, setisClicked] = useState(false);
 	const [isBeefClicked, setisBeefClicked] = useState(false);
 	const [isDairyClicked, setisDairyClicked] = useState(false);
@@ -37,6 +40,7 @@ function Prefernces() {
 		console.log(pref);
 		const email = localStorage.getItem("token");
 		update(email, pref);
+		navigate("/", { replace: true });
 		// console.log("submitted");
 	};
 
@@ -74,39 +78,95 @@ function Prefernces() {
 	};
 
 	const onChangeEggs = () => {
-		console.log("clicked eggs");
-		setisEggsClicked((prevState) => !prevState);
-	};
-
-	const onChangeShellfish = () => {
-		console.log("clicked shellish");
-		setisShellfishClicked((prevState) => !prevState);
-	};
-
-	const onChangePork = () => {
-		console.log("clicked pork");
-		setisPorkClicked((prevState) => !prevState);
-	};
-
-	const onChangeChicken = () => {
-		console.log("clicked chicken");
-		setisChickenClicked((prevState) => !prevState);
-	};
-
-	const onChangeFish = () => {
-		console.log("clicked fish");
-		setisFishClicked((prevState) => !prevState);
-	};
-
-	const onChangeSesame = () => {
-		console.log("clicked sesame");
-		setisSesameClicked((prevState) => !prevState);
-	};
-
-	const onChangeVegan = () => {
-		console.log("clicked vegan");
-		setisVeganClicked((prevState) => !prevState);
-	};
+        console.log("clicked eggs");
+        if (isEggsClicked === false) {
+            let temp = list;
+            temp.push("eggs");
+            setList(temp);
+          } else {
+            let temp = list;
+            setList(temp.filter((item) => item !== "eggs"));
+          }
+        setisEggsClicked((prevState) => !prevState);
+      };
+    
+      const onChangeShellfish = () => {
+        console.log("clicked shellish");
+        if (isShellfishClicked === false) {
+            let temp = list;
+            temp.push("shellfish");
+            setList(temp);
+          } else {
+            let temp = list;
+            setList(temp.filter((item) => item !== "shellfish"));
+          }
+        setisShellfishClicked((prevState) => !prevState);
+      };
+    
+      const onChangePork = () => {
+        console.log("clicked pork");
+         if (isPorkClicked === false) {
+          let temp = list;
+          temp.push("pork");
+          setList(temp);
+        } else {
+          let temp = list;
+          setList(temp.filter((item) => item !== "pork"));
+        }
+        setisPorkClicked((prevState) => !prevState);
+      };
+    
+      const onChangeChicken = () => {
+        console.log("clicked chicken");
+        if (isChickenClicked === false) {
+            let temp = list;
+            temp.push("chicken");
+            setList(temp);
+          } else {
+            let temp = list;
+            setList(temp.filter((item) => item !== "chicken"));
+          }
+        setisChickenClicked((prevState) => !prevState);
+      };
+    
+      const onChangeFish = () => {
+        console.log("clicked fish");
+        if (isFishClicked === false) {
+            let temp = list;
+            temp.push("fish");
+            setList(temp);
+          } else {
+            let temp = list;
+            setList(temp.filter((item) => item !== "fish"));
+          }
+        setisFishClicked((prevState) => !prevState);
+      };
+    
+      const onChangeSesame = () => {
+        console.log("clicked sesame");
+        if (isSesameClicked === false) {
+            let temp = list;
+            temp.push("sesame");
+            setList(temp);
+          } else {
+            let temp = list;
+            setList(temp.filter((item) => item !== "sesame"));
+          }
+        setisSesameClicked((prevState) => !prevState);
+      };
+    
+      const onChangeVegan = () => {
+        console.log("clicked vegan");
+         if (isVeganClicked === false) {
+          let temp = list;
+          temp.push("vegan");
+          setList(temp);
+        } else {
+          let temp = list;
+          setList(temp.filter((item) => item !== "vegan"));
+        }
+        setisVeganClicked((prevState) => !prevState);
+      };
 
 	return (
 		<div className="flex min-h-full items-center justify-center mx-10 px-8 mt-20">
@@ -129,7 +189,7 @@ function Prefernces() {
 								onClick={onChangeBeef}
 								className="checkmark justify-content text-center border-2 border-red-600 text-black hover:bg-red-600 hover:border-red-600 hover:text-white text-sm px-4 py-2 border rounded-full"
 							>
-								<p>Beef</p>
+								<p>No Beef</p>
 							</div>
 						)}
 						{isDairyClicked ? (
@@ -144,7 +204,7 @@ function Prefernces() {
 								onClick={onChangeDairy}
 								className="checkmark justify-content text-center border-2 border-red-600 text-black hover:bg-red-600 hover:border-red-600 hover:text-white text-sm px-4 py-2 border rounded-full"
 							>
-								<p>Dairy</p>
+								<p>No Dairy</p>
 							</div>
 						)}
 						{isEggsClicked ? (
@@ -159,7 +219,7 @@ function Prefernces() {
 								onClick={onChangeEggs}
 								className="checkmark justify-content text-center border-2 border-red-600 text-black hover:bg-red-600 hover:border-red-600 hover:text-white text-sm px-4 py-2 border rounded-full"
 							>
-								<p>Eggs</p>
+								<p>No Eggs</p>
 							</div>
 						)}
 						{isShellfishClicked ? (
@@ -174,7 +234,7 @@ function Prefernces() {
 								onClick={onChangeShellfish}
 								className="checkmark justify-content text-center border-2 border-red-600 text-black hover:bg-red-700 hover:border-red-700 hover:text-white text-sm px-4 py-2 border rounded-full"
 							>
-								<p>Shellfish</p>
+								<p>No Shellfish</p>
 							</div>
 						)}
 					</div>
@@ -191,7 +251,7 @@ function Prefernces() {
 								onClick={onChangePork}
 								className="col-start-2 col-end-4 checkmark justify-content text-center border-2 border-red-600 text-black hover:bg-red-700 hover:border-red-700 hover:text-white text-sm px-4 py-2 border rounded-full"
 							>
-								<p>Pork</p>
+								<p>No Pork</p>
 							</div>
 						)}
 						{isChickenClicked ? (
@@ -206,7 +266,7 @@ function Prefernces() {
 								onClick={onChangeChicken}
 								className="col-start-4 col-end-6 checkmark justify-content text-center border-2 border-red-600 text-black hover:bg-red-700 hover:border-red-700 hover:text-white text-sm px-4 py-2 border rounded-full"
 							>
-								<p>Chicken</p>
+								<p>No Chicken</p>
 							</div>
 						)}
 						{isFishClicked ? (
@@ -221,7 +281,7 @@ function Prefernces() {
 								onClick={onChangeFish}
 								className="col-start-6 col-end-8 checkmark justify-content text-center border-2 border-red-600 text-black hover:bg-red-700 hover:border-red-700 hover:text-white text-sm px-4 py-2 border rounded-full"
 							>
-								<p>Fish</p>
+								<p>No Fish</p>
 							</div>
 						)}
 					</div>
@@ -238,7 +298,7 @@ function Prefernces() {
 								onClick={onChangeSesame}
 								className="col-start-3 col-end-5 checkmark justify-content text-center border-2 border-red-600 text-black hover:bg-red-700 hover:border-red-700 hover:text-white text-sm px-4 py-2 border rounded-full"
 							>
-								<p>Sesame</p>
+								<p>No Sesame</p>
 							</div>
 						)}
 						{isVeganClicked ? (
@@ -253,7 +313,7 @@ function Prefernces() {
 								onClick={onChangeVegan}
 								className="col-start-5 col-end-7 checkmark justify-content text-center border-2 border-red-600 text-black hover:bg-red-700 hover:border-red-700 hover:text-white text-sm px-4 py-2 border rounded-full"
 							>
-								<p>Vegan</p>
+								<p>No Vegan</p>
 							</div>
 						)}
 					</div>
