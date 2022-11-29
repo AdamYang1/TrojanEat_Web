@@ -3,9 +3,7 @@ package com.example.trojaneat.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
@@ -21,19 +19,45 @@ public class UserController {
     @GetMapping("/getUsers")
     public List<User> getUsers(){return userService.getUsers();}
 
-    //get user preference by id
-    @GetMapping("/{id}/getPref")
-    public Map<String, Integer> getUserPreferenceById(@PathVariable("id") Long id){
-        return userService.getUserPreferenceById(id);
+    @GetMapping("/getUser/email/{email}")
+    public List<User> getUserByEmail(@PathVariable("email") String email){
+        return userService.getUserByEmail(email);
     }
+
+    @GetMapping("/auth/email/{email}/pwd/{pwd}")
+    public List<User> authUser(@PathVariable("email") String email,
+                               @PathVariable("pwd") String pwd){
+        return userService.authUser(email, pwd);
+    }
+
+    @PostMapping("register/email/{email}/pwd/{pwd}")
+    public void addUser(@PathVariable("email") String email,
+                        @PathVariable("pwd") String pwd){
+        userService.addUser(email, pwd);
+    }
+
+    //get user preference by id
+    @GetMapping("/email/{email}/getPref")
+    public Map<String, Integer> getUserPreferenceByEmail(@PathVariable("email") String email){
+        return userService.getUserPreferenceByEmail(email);
+    }
+
+//    @GetMapping(/email/{email}/getMatch/dh/{dh})
 
     @GetMapping("/{id}/getRec")
     public Map<String, Double> getUserRecById(@PathVariable("id") Long id){
         return userService.getUserRecById(id);
     }
 
-    @PutMapping("/{id}/updatePref")
-    public void putUserPref(@PathVariable("id") Long id){
-        userService.putUserRec(id, new Date());
+
+    @PutMapping("/email/{email}/pref/{pref}")
+    public void putUserPref( @PathVariable("email") String email,
+                             @PathVariable("pref") String pref) {
+        List<String> myList = new ArrayList<String>(Arrays.asList(pref.split(",")));
+//        System.out.println(myList);
+        userService.putUserPref(email, myList);
+
     }
+
+
 }

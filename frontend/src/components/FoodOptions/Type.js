@@ -9,12 +9,28 @@ import { faLeaf } from '@fortawesome/free-solid-svg-icons'
 import { faSeedling } from '@fortawesome/free-solid-svg-icons'
 import { faWheatAwn } from '@fortawesome/free-solid-svg-icons'
 import { faX } from '@fortawesome/free-solid-svg-icons'
+import { faCrow } from '@fortawesome/free-solid-svg-icons'
+import { faGlassWater } from '@fortawesome/free-solid-svg-icons'
 
 export default function Type({ category }) {
-    if (category === 'dairy') {
+    if (category === 'diary') {
         return (
             <div>
-                <FontAwesomeIcon icon={faCow} className='p-2.5 py-[12.5px] text-white rounded-lg bg-indigo-700' size={"lg"}/>
+                <FontAwesomeIcon icon={faGlassWater} className='p-2.5 py-[12.5px] text-white rounded-lg bg-indigo-700' size={"lg"}/>
+            </div>
+        )
+    }
+    else if (category === 'beef') {
+        return (
+            <div>
+                <FontAwesomeIcon icon={faCow} className='p-2.5 py-[12.5px] text-white rounded-lg bg-red-700' size={"lg"}/>
+            </div>
+        )
+    }
+    else if (category === 'chicken') {
+        return (
+            <div>
+                <FontAwesomeIcon icon={faCrow} className='p-2.5 py-[12.5px] text-white rounded-lg bg-orange-400' size={"lg"}/>
             </div>
         )
     }

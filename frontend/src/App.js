@@ -11,7 +11,7 @@ function App() {
   const ctx = useContext(AuthContext);
 
   return (
-    <div className="h-full">
+    <div className="h-screen dark:bg-slate-900">
       <BrowserRouter>
         <Routes>
           <Route

@@ -14,8 +14,35 @@ public class UserService {
 
     public List<User> getUsers() {return userRepository.findAll(); }
 
-    public Map<String, Integer> getUserPreferenceById(Long id) {
-        User user = userRepository.findUserById(id);
+    public Map<String, Double> getUserRecById(Long id) {
+        Double evk = userRepository.getUserEvkRecById(id);
+        Double vlg = userRepository.getUserVlgRecById(id);
+        Double pks = userRepository.getUserPksRecById(id);
+        Map<String, Double> res = new HashMap<>();
+        res.put("pks", pks);
+        res.put("vlg", vlg);
+        res.put("evk", evk);
+        return res;
+    }
+
+    public void putUserRec(Long id, Date date) {
+//        Map<String, Integer> userPref = getUserPreferenceById(id);
+
+    }
+
+    public List<User> getUserByEmail(String email) {
+        return userRepository.findUserByEmail(email);
+    }
+
+    public void addUser(String email, String pwd) {
+        User newUser = new User(1L, email, pwd,
+                "EVK", 1, 0, 0, 0, 0, 0,
+                0, 0, 0, 2D, 0D, 0D);
+        userRepository.saveAll(List.of(newUser));
+    }
+
+    public Map<String, Integer> getUserPreferenceByEmail(String email) {
+        User user = userRepository.findUserByEmail(email).get(0);
         Map<String, Integer> pref = new HashMap<>();
         if(user.getBeef()>0)
             pref.put("Beef:", user.getBeef());
@@ -38,19 +65,42 @@ public class UserService {
         return pref;
     }
 
-    public Map<String, Double> getUserRecById(Long id) {
-        Double evk = userRepository.getUserEvkRecById(id);
-        Double vlg = userRepository.getUserVlgRecById(id);
-        Double pks = userRepository.getUserPksRecById(id);
-        Map<String, Double> res = new HashMap<>();
-        res.put("pks", pks);
-        res.put("vlg", vlg);
-        res.put("evk", evk);
-        return res;
+    public void putUserPref(String email, List<String> pref) {
+        User user = userRepository.findUserByEmail(email).get(0);
+        user.setBeef(0);
+        user.setChicken(0);
+        user.setDiary(0);
+        user.setEggs(0);
+        user.setShellfish(0);
+        user.setPork(0);
+        user.setFish(0);
+        user.setSeasame(0);
+        user.setVegan(0);
+        for(String p: pref){
+            if(p.equals("beef"))
+                user.setBeef(1);
+            if(p.equals("chicken"))
+                user.setChicken(1);
+            if(p.equals("diary"))
+                user.setDiary(1);
+            if(p.equals("eggs"))
+                user.setEggs(1);
+            if(p.equals("shellfish"))
+                user.setShellfish(1);
+            if(p.equals("pork"))
+                user.setPork(1);
+            if(p.equals("fish"))
+                user.setFish(1);
+            if(p.equals("seasame"))
+                user.setSeasame(1);
+            if(p.equals("vegan"))
+                user.setVegan(1);
+        }
+        userRepository.save(user);
+//        return "Updated;"
     }
 
-    public void putUserRec(Long id, Date date) {
-        Map<String, Integer> userPref = getUserPreferenceById(id);
-
+    public List<User> authUser(String email, String pwd) {
+        return userRepository.authUser(email, pwd);
     }
 }

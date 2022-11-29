@@ -5,6 +5,24 @@ import AuthContext from "../../store/auth-context";
 import { useNavigate } from "react-router-dom";
 import PrefContext from "../../store/pref-context";
 
+function setTheme() {
+  if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+    localStorage.setItem('theme','dark');
+  } else {
+    localStorage.setItem('theme','light');
+  }
+}
+
+if ('theme' in localStorage) {
+  localStorage.removeItem('theme');
+}
+
+if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+  document.documentElement.classList.add('dark')
+} else {
+  document.documentElement.classList.remove('dark')
+}
+
 const AuthForm = () => {
   const navigate = useNavigate();
   const [email, setUserName] = useState("");
@@ -25,6 +43,7 @@ const AuthForm = () => {
   };
 
   const submitHandler = function (event) {
+    setTheme();
     event.preventDefault();
     if (isLogin) {
       const checkAuth = async function () {
@@ -78,7 +97,7 @@ const AuthForm = () => {
 
   return (
     <>
-      <div className="flex min-h-full items-center justify-center py-12 px-4 sm:px-6 lg:px-8 lg:my-20">
+      <div className="flex min-h-full items-center justify-center py-12 px-4 sm:px-6 lg:px-8 dark:bg-gray-900">
         <div className="w-full max-w-md space-y-8">
           <div>
             <img
@@ -86,7 +105,7 @@ const AuthForm = () => {
               src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/94/USC_Trojans_logo.svg/1373px-USC_Trojans_logo.svg.png"
               alt="USC Logo"
             />
-            <h2 className="mt-6 text-center text-3xl font-bold tracking-tight text-gray-900">
+            <h2 className="mt-6 text-center text-3xl font-bold tracking-tight text-black dark:text-white">
               {isLogin ? "Sign in to your account" : "Create an account"}
             </h2>
           </div>
@@ -106,7 +125,7 @@ const AuthForm = () => {
                     type="email"
                     autoComplete="email"
                     required
-                    className="relative block w-full appearance-none rounded-none rounded-t-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-red-800 focus:outline-none focus:ring-red-800 sm:text-sm"
+                    className="relative block w-full appearance-none rounded-none rounded-t-md border border-gray-300 px-3 py-2 text-gray-900 dark:border-gray-700 dark:bg-gray-800 dark:text-white placeholder-gray-500 focus:z-10 focus:border-red-800 focus:outline-none focus:ring-red-800 sm:text-sm"
                     placeholder="Email address"
                   />
                 </div>
@@ -120,7 +139,7 @@ const AuthForm = () => {
                   type="password"
                   autoComplete="current-password"
                   required
-                  className="relative block w-full appearance-none rounded-none rounded-b-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-red-800 focus:outline-none focus:ring-red-800 sm:text-sm"
+                  className="relative block w-full appearance-none rounded-none rounded-b-md border border-gray-300 px-3 py-2 text-gray-900 dark:border-gray-700 dark:bg-gray-800 dark:text-white placeholder-gray-500 focus:z-10 focus:border-red-800 focus:outline-none focus:ring-red-800 sm:text-sm"
                   placeholder="Password"
                 />
               </div>
@@ -137,8 +156,10 @@ const AuthForm = () => {
                     type="email"
                     autoComplete="email"
                     required
+
                     pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
                     className="relative block w-full appearance-none rounded-none rounded-t-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-red-800 focus:outline-none focus:ring-red-800 sm:text-sm"
+
                     placeholder="Email address"
                   />
                 </div>
@@ -153,7 +174,7 @@ const AuthForm = () => {
                     type="Password"
                     required
                     // ref={passwordInputRef}
-                    className="relative block w-full appearance-none rounded-none  border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-red-800 focus:outline-none focus:ring-red-800 sm:text-sm"
+                    className="relative block w-full appearance-none rounded-none border border-gray-300 px-3 py-2 text-gray-900 dark:border-gray-700 dark:bg-gray-800 dark:text-white placeholder-gray-500 focus:z-10 focus:border-red-800 focus:outline-none focus:ring-red-800 sm:text-sm"
                     placeholder="Password"
                   />
                 </div>
@@ -167,7 +188,7 @@ const AuthForm = () => {
                     name="confirm-password"
                     type="password"
                     required
-                    className="relative block w-full appearance-none rounded-none rounded-b-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-red-800 focus:outline-none focus:ring-red-800 sm:text-sm"
+                    className="relative block w-full appearance-none rounded-none rounded-b-md border border-gray-300 px-3 py-2 text-gray-900 dark:border-gray-700 dark:bg-gray-800 dark:text-white placeholder-gray-500 focus:z-10 focus:border-red-800 focus:outline-none focus:ring-red-800 sm:text-sm"
                     placeholder="Confirm Password"
                   />
                 </div>
@@ -178,7 +199,20 @@ const AuthForm = () => {
             )}
 
             <div className="flex items-center justify-between">
-              <div className="flex items-center"></div>
+              <div className="flex items-center">
+                <input
+                  id="remember-me"
+                  name="remember-me"
+                  type={isLogin ? "checkbox" : "hidden"}
+                  className="h-4 w-4 rounded border-gray-300 text-red-800 focus:ring-red-800 dark:border-gray-700 dark:bg-gray-800"
+                />
+                <label
+                  htmlFor="remember-me"
+                  className="ml-2 block text-sm text-gray-900 dark:text-white"
+                >
+                  {isLogin ? "Remember me" : ""}
+                </label>
+              </div>
               <div className="text-sm">
                 <button
                   className="font-medium text-red-800 hover:text-yellow-500 transition"

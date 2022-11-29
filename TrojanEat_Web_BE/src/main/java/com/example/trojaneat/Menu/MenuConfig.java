@@ -10,15 +10,15 @@ import java.util.List;
 
 @Configuration
 public class MenuConfig {
-    @Bean
+    /*@Bean
     CommandLineRunner menu(MenuRepository repository) {
         return args -> {
-            Menu food1 = new Menu(1L, "Grilled Beef", 2, 2, "2022-08-08", 1, 1, 0,
-                    0, 0, 0, 0, 0, 0, "EVK", "lunch" );
-            Menu food2 = new Menu(2L, "Grilled Chicken", 1, 1, "2022-08-08", 1, 0, 0,
-                    0, 0, 1, 0, 0, 0, "VLG", "dinner" );
+            Menu food1 = new Menu(1L, "Grilled Beef", 2, "EVK", "2022-08-08", 1, 1, 0,
+                    0, 0, 0, 0, 0, 0, "lunch" );
+            Menu food2 = new Menu(2L, "Grilled Chicken", 1, "VLG", "2022-08-08", 1, 0, 0,
+                    0, 0, 1, 0, 0, 0, "dinner" );
             repository.saveAll(List.of(food1, food2));
         };
 
-    }
+    }*/
 }

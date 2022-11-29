@@ -1,6 +1,7 @@
-import { Fragment } from "react";
+import {Fragment, useState} from "react";
 import { Disclosure, Menu, Transition } from "@headlessui/react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
+import {MoonIcon, SunIcon} from "@heroicons/react/24/solid";
 import React from "react";
 
 function signOut() {
@@ -12,9 +13,29 @@ const navigation = [{ name: "Home", href: "/", current: true }];
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
-export default function Example() {
+export default function Navbar() {
+  const [theme, setTheme] = useState(localStorage.getItem("theme"));
+
+  if (theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+    document.documentElement.classList.add('dark')
+  } else {
+    document.documentElement.classList.remove('dark')
+  }
+
+  function setLight() {
+    // Whenever the user explicitly chooses light mode
+    localStorage.theme = 'light'
+    setTheme("light");
+  }
+
+  function setDark() {
+    // Whenever the user explicitly chooses dark mode
+    localStorage.theme = 'dark'
+    setTheme("dark");
+  }
+
   return (
-    <Disclosure as="nav" className="bg-white dark:bg-gray-800 mb-10">
+    <Disclosure as="nav" className="bg-white dark:bg-slate-900 mb-10">
       {({ open }) => (
         <>
           <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
@@ -42,7 +63,7 @@ export default function Example() {
                     src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/94/USC_Trojans_logo.svg/1373px-USC_Trojans_logo.svg.png"
                     alt="Your Company"
                   />
-                  <h1 className="ml-2 font-bold text-lg">Dining</h1>
+                  <h1 className="ml-2 font-bold text-lg dark:text-white">Dining</h1>
                 </div>
                 <div className="hidden sm:ml-6 sm:block">
                   <div className="flex space-x-4 right-0">
@@ -66,7 +87,15 @@ export default function Example() {
               </div>
               <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
                 {/* Profile dropdown */}
-                <Menu as="div" className="relative ml-3">
+                <Menu as="div" className="relative ml-3 flex items-center">
+                  { theme === "light" ?
+                      <div className='px-4'>
+                        <SunIcon className='w-5 text-black dark:text-white' onClick={ setDark }/>
+                      </div> :
+                      <div className='px-4'>
+                        <MoonIcon className='w-5 text-black dark:text-white' onClick={ setLight }/>
+                      </div>
+                  }
                   <div>
                     <Menu.Button className="flex rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
                       <span className="sr-only">Open user menu</span>
@@ -86,7 +115,7 @@ export default function Example() {
                     leaveFrom="transform opacity-100 scale-100"
                     leaveTo="transform opacity-0 scale-95"
                   >
-                    <Menu.Items className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+                    <Menu.Items className="absolute right-0 z-10 mt-32 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
                       <Menu.Item>
                         {({ active }) => (
                           <a
