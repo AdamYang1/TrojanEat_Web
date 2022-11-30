@@ -7,7 +7,23 @@ import DiningHall from "../DiningHall/DiningHall";
 import TopRecommended from "../DiningHall/TopRecommended";
 
 export default function Dashboard() {
-    const name = 'Josh'
+    let res = localStorage.getItem("token").split('@');
+    const name = res[0];
+
+    const [prefs, setPrefs] = useState([]);
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const {data: response} = await axios.get(`https://trojans-eat.herokuapp.com/api/v1/user/email/${localStorage.getItem("token")}/getPref`);
+                setPrefs(response);
+            } catch (error) {
+                console.error(error.message);
+            }
+        }
+        fetchData();
+    }, []);
+
     const village = {
         "id" : 5,
         "name" : "USC Village Dining Hall",
@@ -21,7 +37,7 @@ export default function Dashboard() {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const {data: response} = await axios.get('http://localhost:8080/api/v1/menu');
+                const {data: response} = await axios.get('https://trojans-eat.herokuapp.com/api/v1/menu');
                 setMenu(response);
             } catch (error) {
                 console.error(error.message);
@@ -36,7 +52,7 @@ export default function Dashboard() {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const {data: response} = await axios.get('http://localhost:8080/api/v1/dining-halls');
+                const {data: response} = await axios.get('https://trojans-eat.herokuapp.com/api/v1/dining-halls');
                 setDiningHalls(response);
             } catch (error) {
                 console.error(error.message);
