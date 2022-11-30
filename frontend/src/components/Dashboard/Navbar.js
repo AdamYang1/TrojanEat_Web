@@ -54,13 +54,13 @@ export default function Navbar() {
               <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
                 <div className="flex flex-shrink-0 items-center">
                   <img
-                    className="block h-8 w-auto lg:hidden"
-                    src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/94/USC_Trojans_logo.svg/1373px-USC_Trojans_logo.svg.png"
+                    className="block h-10 w-auto lg:hidden"
+                    src="https://camo.githubusercontent.com/d869979b5bc0951517aeabf025b613ab0cb59ec3e698775c27d87d423c4d489c/68747470733a2f2f73322e6c6f6c692e6e65742f323032322f30382f30362f687649414b43516d715963754f47442e706e67"
                     alt="Your Company"
                   />
                   <img
-                    className="hidden h-8 w-auto lg:block"
-                    src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/94/USC_Trojans_logo.svg/1373px-USC_Trojans_logo.svg.png"
+                    className="hidden h-10 w-auto lg:block"
+                    src="https://camo.githubusercontent.com/d869979b5bc0951517aeabf025b613ab0cb59ec3e698775c27d87d423c4d489c/68747470733a2f2f73322e6c6f6c692e6e65742f323032322f30382f30362f687649414b43516d715963754f47442e706e67"
                     alt="Your Company"
                   />
                   <h1 className="ml-2 font-bold text-lg dark:text-white">Dining</h1>

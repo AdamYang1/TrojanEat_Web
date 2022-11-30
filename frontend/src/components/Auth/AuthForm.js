@@ -48,7 +48,7 @@ const AuthForm = () => {
     if (isLogin) {
       const checkAuth = async function () {
         let url =
-          "http://trojans-eat.herokuapp.com/api/v1/user/auth/email/" +
+          "https://trojans-eat.herokuapp.com/api/v1/user/auth/email/" +
           email +
           "/pwd/" +
           password;
@@ -71,14 +71,14 @@ const AuthForm = () => {
     } else {
       const checkRegister = async function () {
         let url =
-          "http://trojans-eat.herokuapp.com/api/v1/user/getUser/email/" + email;
+          "https://trojans-eat.herokuapp.com/api/v1/user/getUser/email/" + email;
         const res = await fetch(url);
         const data = await res.json();
 
         //if user is not regisetered
         if (data.length === 0) {
           url =
-            "http://trojans-eat.herokuapp.com/api/v1/user/register/email/" +
+            "https://trojans-eat.herokuapp.com/api/v1/user/register/email/" +
             email +
             /pwd/ +
             password;
@@ -101,9 +101,9 @@ const AuthForm = () => {
         <div className="w-full max-w-md space-y-8">
           <div>
             <img
-              className="mx-auto h-12 w-auto"
-              src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/94/USC_Trojans_logo.svg/1373px-USC_Trojans_logo.svg.png"
-              alt="USC Logo"
+              className="mx-auto h-20 w-auto"
+              src="https://camo.githubusercontent.com/d869979b5bc0951517aeabf025b613ab0cb59ec3e698775c27d87d423c4d489c/68747470733a2f2f73322e6c6f6c692e6e65742f323032322f30382f30362f687649414b43516d715963754f47442e706e67"
+              alt="Trojans Eat Logo"
             />
             <h2 className="mt-6 text-center text-3xl font-bold tracking-tight text-black dark:text-white">
               {isLogin ? "Sign in to your account" : "Create an account"}
@@ -198,21 +198,7 @@ const AuthForm = () => {
               </div>
             )}
 
-            <div className="flex items-center justify-between">
-              <div className="flex items-center">
-                <input
-                  id="remember-me"
-                  name="remember-me"
-                  type={isLogin ? "checkbox" : "hidden"}
-                  className="h-4 w-4 rounded border-gray-300 text-red-800 focus:ring-red-800 dark:border-gray-700 dark:bg-gray-800"
-                />
-                <label
-                  htmlFor="remember-me"
-                  className="ml-2 block text-sm text-gray-900 dark:text-white"
-                >
-                  {isLogin ? "Remember me" : ""}
-                </label>
-              </div>
+            <div className="flex items-center justify-end">
               <div className="text-sm">
                 <button
                   className="font-medium text-red-800 hover:text-yellow-500 transition"
