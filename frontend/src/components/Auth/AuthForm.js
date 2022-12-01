@@ -4,6 +4,7 @@ import { useState, useContext } from "react";
 import AuthContext from "../../store/auth-context";
 import { useNavigate } from "react-router-dom";
 import PrefContext from "../../store/pref-context";
+import logo from "../../logo.png";
 
 function setTheme() {
   if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
@@ -102,7 +103,7 @@ const AuthForm = () => {
           <div>
             <img
               className="mx-auto h-20 w-auto"
-              src="https://camo.githubusercontent.com/d869979b5bc0951517aeabf025b613ab0cb59ec3e698775c27d87d423c4d489c/68747470733a2f2f73322e6c6f6c692e6e65742f323032322f30382f30362f687649414b43516d715963754f47442e706e67"
+              src={ logo }
               alt="Trojans Eat Logo"
             />
             <h2 className="mt-6 text-center text-3xl font-bold tracking-tight text-black dark:text-white">

@@ -2,6 +2,7 @@ import {Fragment, useState} from "react";
 import { Disclosure, Menu, Transition } from "@headlessui/react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import {MoonIcon, SunIcon} from "@heroicons/react/24/solid";
+import logo from "../../logo.png";
 import React from "react";
 
 function signOut() {
@@ -55,12 +56,12 @@ export default function Navbar() {
                 <div className="flex flex-shrink-0 items-center">
                   <img
                     className="block h-10 w-auto lg:hidden"
-                    src="https://camo.githubusercontent.com/d869979b5bc0951517aeabf025b613ab0cb59ec3e698775c27d87d423c4d489c/68747470733a2f2f73322e6c6f6c692e6e65742f323032322f30382f30362f687649414b43516d715963754f47442e706e67"
+                    src={ logo }
                     alt="Your Company"
                   />
                   <img
                     className="hidden h-10 w-auto lg:block"
-                    src="https://camo.githubusercontent.com/d869979b5bc0951517aeabf025b613ab0cb59ec3e698775c27d87d423c4d489c/68747470733a2f2f73322e6c6f6c692e6e65742f323032322f30382f30362f687649414b43516d715963754f47442e706e67"
+                    src={ logo }
                     alt="Your Company"
                   />
                   <h1 className="ml-2 font-bold text-lg dark:text-white">Dining</h1>
