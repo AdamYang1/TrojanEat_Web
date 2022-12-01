@@ -20,7 +20,7 @@ function App() {
             element={ctx.isLoggedIn ? <Dashboard /> : <Navigate to="/Auth" />}
           />
 
-          <Route path="/Auth" element={<AuthForm />} />
+          <Route exact path="/Auth" element={<AuthForm />} />
           <Route
             path="/Preferences"
             element={ctx.isLoggedIn ? <Prefernces /> : <Navigate to="/Auth" />}
