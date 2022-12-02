@@ -20,9 +20,13 @@ function getMeal(s) {
 }
 
 export default function Dashboard() {
-
-    let res = localStorage.getItem("token").split('@');
+    let res = []
+    if (localStorage.getItem("token")) {
+        res = localStorage.getItem("token").split('@');
+    }
     const name = res[0];
+
+    const [topObj, setTopObj] = useState({});
 
     // menu GET request
     const [menu, setMenu] = useState([]);
@@ -74,32 +78,71 @@ export default function Dashboard() {
         fetchDiningHalls()
     },[])
 
-    useEffect(() => {
-
+    const fetchData = async () => {
         const dHalls = ["EVK", "VLG", "PKS"]
+        const pref = await fetch(
+            `https://trojans-eat.herokuapp.com/api/v1/user/email/ohsieh@usc.edu/getPref`
+        );
+        var today = new Date()
+        const time = today.getHours() + ':' + today.getMinutes() + ':' + today.getSeconds();
+        console.log(time)
 
-        const fetchData = async () => {
-            for (let i = 0; i < prefs.length; i++) {
-                for (let j = 0; j < diningHalls.length; j++) {
-                    try {
-                        var today = new Date()
-                        const time = today.getHours() + ':' + today.getMinutes() + ':' + today.getSeconds();
-                        console.log(time)
-                        const {data: response} = await axios.get(`https://trojans-eat.herokuapp.com/api/v1/matchedMenu/type/${prefs[i]}/dh/${dHalls[j]}/meal/${getMeal(time)}`);
-                        console.log(response)
-                        if (response.length > matched.length) {
-                            setMatched(response);
-                        }
+        const prefJson = await pref.json();
+        const prefList = Object.keys(prefJson);
+        const prefLList = prefList.map((item) => {
+            return item.toLowerCase();
+        });
+        for (const pref of prefLList) {
+            const res1 = await fetch(
+                `https://trojans-eat.herokuapp.com/api/v1/matchedMenu/type/${pref}/dh/evk/meal/${getMeal(time)}`
+            );
+            const res2 = await fetch(
+                `https://trojans-eat.herokuapp.com/api/v1/matchedMenu/type/${pref}/dh/vlg/meal/${getMeal(time)}`
+            );
+            const res3 = await fetch(
+                `https://trojans-eat.herokuapp.com/api/v1/matchedMenu/type/${pref}/dh/vlg/meal/${getMeal(time)}`
+            );
+            const res4 = await fetch(
+                `https://trojans-eat.herokuapp.com/api/v1/dining-halls`
+            );
+            const res1Json = await res1.json();
+            const res2Json = await res2.json();
+            const res3Json = await res3.json();
+            const res4Json = await res4.json();
 
-                        console.log("matched = ")
-                        console.log(matched)
-                    } catch (error) {
-                        console.error(error.message);
-                    }
+            console.log(res1Json);
+            console.log(res2Json);
+            console.log(res3Json);
+            console.log(res4Json)
+            setDiningHalls(res4Json)
+
+            const responses = [res1Json, res2Json, res3Json]
+            let top = []
+
+            for (let r of responses) {
+                if (r.length > top.length) {
+                    top = r;
                 }
             }
+            setMatched(top)
+            console.log("top =")
+            console.log(top)
+            top_recommended = top[0].dHall;
+            console.log(top_recommended)
+            if (top_recommended === 'EVK') {
+                setTopObj(res4Json[0])
+            } else if (top_recommended === 'PKS') {
+                setTopObj(res4Json[0])
+            } else if (top_recommended === 'VLG') {
+                setTopObj(res4Json[0])
+            }
+
+            console.log(topObj)
+
         }
-        fetchData()
+    };
+    useEffect(() => {
+        fetchData();
     }, []);
 
     return(
@@ -110,7 +153,7 @@ export default function Dashboard() {
             <div className='grid grid grid-cols-1 sm:grid-cols-2 sm:gap-10 pl-4'>
                 <div>
                     <h1 className='text-lg font-bold pt-5 pb-2 dark:text-white'>Top Recommended</h1>
-                    <TopRecommended props={diningHalls[0]} />
+                    <TopRecommended props={topObj} />
                 </div>
                 <div className='sm:ml-5'>
                     <h1 className='text-lg font-semibold pt-5 pb-2 dark:text-white'>Personalized Options</h1>

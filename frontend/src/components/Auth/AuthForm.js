@@ -59,7 +59,7 @@ const AuthForm = () => {
         if (data.length !== 0) {
           authCtx.login(email);
           if (!prefContext.userIsNew) {
-            navigate("/", { replace: true });
+            navigate("/Dashboard", { replace: true });
           } else if (prefContext.userIsNew) {
             prefContext.changeState(false);
             navigate("/Preferences", { replace: true });

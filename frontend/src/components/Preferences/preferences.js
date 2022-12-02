@@ -41,7 +41,7 @@ function Prefernces() {
 		console.log(pref);
 		const email = localStorage.getItem("token");
 		update(email, pref);
-		navigate("/", { replace: true });
+		navigate("/Dashboard", { replace: true });
 		// console.log("submitted");
 	};
 

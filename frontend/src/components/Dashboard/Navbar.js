@@ -9,7 +9,7 @@ function signOut() {
   localStorage.removeItem("token");
 }
 
-const navigation = [{ name: "Home", href: "/", current: true }];
+const navigation = [];
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
