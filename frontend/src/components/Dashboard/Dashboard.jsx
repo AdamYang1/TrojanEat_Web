@@ -79,70 +79,95 @@ export default function Dashboard() {
     },[])
 
     const fetchData = async () => {
-        const dHalls = ["EVK", "VLG", "PKS"]
+        // const dHalls = ["EVK", "VLG", "PKS"];
         const pref = await fetch(
-            `https://trojans-eat.herokuapp.com/api/v1/user/email/ohsieh@usc.edu/getPref`
+            `https://trojans-eat.herokuapp.com/api/v1/user/email/${localStorage.getItem(
+                "token"
+            )}/getPref`
         );
-        var today = new Date()
-        const time = today.getHours() + ':' + today.getMinutes() + ':' + today.getSeconds();
-        console.log(time)
+        var today = new Date();
+        const time =
+            today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+        console.log(time);
 
         const prefJson = await pref.json();
         const prefList = Object.keys(prefJson);
         const prefLList = prefList.map((item) => {
             return item.toLowerCase();
         });
+        let top = { VLG: [], EVK: [], PKS: [] };
         for (const pref of prefLList) {
             const res1 = await fetch(
-                `https://trojans-eat.herokuapp.com/api/v1/matchedMenu/type/${pref}/dh/evk/meal/${getMeal(time)}`
+                `https://trojans-eat.herokuapp.com/api/v1/matchedMenu/type/${pref}/dh/evk/meal/${getMeal(
+                    time
+                )}`
             );
             const res2 = await fetch(
-                `https://trojans-eat.herokuapp.com/api/v1/matchedMenu/type/${pref}/dh/vlg/meal/${getMeal(time)}`
+                `https://trojans-eat.herokuapp.com/api/v1/matchedMenu/type/${pref}/dh/vlg/meal/${getMeal(
+                    time
+                )}`
             );
             const res3 = await fetch(
-                `https://trojans-eat.herokuapp.com/api/v1/matchedMenu/type/${pref}/dh/vlg/meal/${getMeal(time)}`
+                `https://trojans-eat.herokuapp.com/api/v1/matchedMenu/type/${pref}/dh/pks/meal/${getMeal(
+                    time
+                )}`
             );
-            const res4 = await fetch(
-                `https://trojans-eat.herokuapp.com/api/v1/dining-halls`
-            );
+
             const res1Json = await res1.json();
             const res2Json = await res2.json();
             const res3Json = await res3.json();
-            const res4Json = await res4.json();
-
-            console.log(res1Json);
-            console.log(res2Json);
-            console.log(res3Json);
-            console.log(res4Json)
-            setDiningHalls(res4Json)
-
-            const responses = [res1Json, res2Json, res3Json]
-            let top = []
-
-            for (let r of responses) {
-                if (r.length > top.length) {
-                    top = r;
+            for (const temp of res1Json) {
+                const existingTemp = top.EVK.filter((item) => item.id === temp.id);
+                if (existingTemp.length == 0) {
+                    top.EVK.push(temp);
                 }
             }
-            setMatched(top)
-            console.log("top =")
-            console.log(top)
-            top_recommended = top[0].dHall;
-            console.log(top_recommended)
-            if (top_recommended === 'EVK') {
-                setTopObj(res4Json[0])
-            } else if (top_recommended === 'PKS') {
-                setTopObj(res4Json[0])
-            } else if (top_recommended === 'VLG') {
-                setTopObj(res4Json[0])
+            for (const temp of res2Json) {
+                const existingTemp = top.VLG.filter((item) => item.id === temp.id);
+                if (existingTemp.length == 0) {
+                    top.VLG.push(temp);
+                }
             }
+            for (const temp of res3Json) {
+                const existingTemp = top.PKS.filter((item) => item.id === temp.id);
+                if (existingTemp.length == 0) {
+                    top.PKS.push(temp);
+                }
+            }
+        }
+        const res4 = await fetch(
+            `https://trojans-eat.herokuapp.com/api/v1/dining-halls`
+        );
+        const res4Json = await res4.json();
+        let vlgSize = top.VLG.length;
+        let evkSize = top.EVK.length;
+        let pksSize = top.PKS.length;
+        let tempTop = {};
+        if (vlgSize >= evkSize && vlgSize >= pksSize) {
+            tempTop = top.VLG;
+        } else if (evkSize > pksSize && evkSize > pksSize) {
+            tempTop = top.EVK;
+        } else {
+            tempTop = top.PKS;
+        }
+        console.log("tempTop: ");
+        console.log(tempTop);
+        setMatched(tempTop);
 
-            console.log(topObj)
-
+        if (tempTop[0].dHall === 'EVK') {
+            setTopObj(res4Json[0])
+        } else if (tempTop[0].dHall === 'PKS') {
+            setTopObj(res4Json[1])
+        } else if (tempTop[0].dHall === 'VLG') {
+            setTopObj(res4Json[2])
         }
     };
+    const fetchAsync = async () => {
+        await fetchData();
+        console.log(topObj);
+    };
     useEffect(() => {
-        fetchData();
+        fetchAsync();
     }, []);
 
     return(
