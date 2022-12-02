@@ -45,23 +45,23 @@ public class UserService {
         User user = userRepository.findUserByEmail(email).get(0);
         Map<String, Integer> pref = new HashMap<>();
         if(user.getBeef()>0)
-            pref.put("Beef:", user.getBeef());
+            pref.put("Beef", user.getBeef());
         if(user.getDiary()>0)
-            pref.put("Diary:", user.getDiary());
+            pref.put("Diary", user.getDiary());
         if(user.getEggs()>0)
-            pref.put("Eggs:", user.getEggs());
+            pref.put("Eggs", user.getEggs());
         if(user.getShellfish()>0)
-            pref.put("Shellfish:", user.getShellfish());
+            pref.put("Shellfish", user.getShellfish());
         if(user.getPork()>0)
-            pref.put("Pork:", user.getPork());
+            pref.put("Pork", user.getPork());
         if(user.getChicken()>0)
-            pref.put("Chicken:", user.getChicken());
+            pref.put("Chicken", user.getChicken());
         if(user.getFish()>0)
-            pref.put("Fish:", user.getFish());
+            pref.put("Fish", user.getFish());
         if(user.getSeasame()>0)
-            pref.put("Seasame:", user.getSeasame());
+            pref.put("Seasame", user.getSeasame());
         if(user.getVegan()>0)
-            pref.put("Vegan:", user.getVegan());
+            pref.put("Vegan", user.getVegan());
         return pref;
     }
 
