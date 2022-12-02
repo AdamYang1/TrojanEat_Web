@@ -27,7 +27,7 @@ function Prefernces() {
 			console.log(email);
 			console.log(pref);
 			await fetch(
-				`http://trojans-eat.herokuapp.com/api/v1/user/email/${email}/pref/${pref}`,
+				`https://trojans-eat.herokuapp.com/api/v1/user/email/${email}/pref/${pref}`,
 				{ method: "PUT" }
 			);
 		} catch (err) {
