@@ -81,7 +81,9 @@ export default function Dashboard() {
     const fetchData = async () => {
         const dHalls = ["EVK", "VLG", "PKS"]
         const pref = await fetch(
-            `https://trojans-eat.herokuapp.com/api/v1/user/email/ohsieh@usc.edu/getPref`
+            `https://trojans-eat.herokuapp.com/api/v1/user/email/${localStorage.getItem(
+				"token"
+			)}/getPref`
         );
         var today = new Date()
         const time = today.getHours() + ':' + today.getMinutes() + ':' + today.getSeconds();
