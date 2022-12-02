@@ -6,6 +6,7 @@ import Dashboard from "./components/Dashboard/Dashboard";
 import AuthContext from "./store/auth-context";
 import AuthForm from "./components/Auth/AuthForm";
 import Prefernces from "./components/Preferences/preferences";
+import Splash from "./components/Splash/Splash";
 
 function App() {
   const ctx = useContext(AuthContext);
@@ -17,7 +18,14 @@ function App() {
           <Route
             exact
             path="/"
-            element={ctx.isLoggedIn ? <Dashboard /> : <Navigate to="/Auth" />}
+            // element={ctx.isLoggedIn ? <Dashboard /> : <Navigate to="/Auth" />}
+              element={<Splash/>}
+          />
+          <Route
+              exact
+              path="/Dashboard"
+              // element={ctx.isLoggedIn ? <Dashboard /> : <Navigate to="/Auth" />}
+              element={<Dashboard/>}
           />
 
           <Route exact path="/Auth" element={<AuthForm />} />

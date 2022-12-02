@@ -81,7 +81,7 @@ export default function Dashboard() {
     const fetchData = async () => {
         const dHalls = ["EVK", "VLG", "PKS"]
         const pref = await fetch(
-            `https://trojans-eat.herokuapp.com/api/v1/user/email/ohsieh@usc.edu/getPref`
+            `https://trojans-eat.herokuapp.com/api/v1/user/email/${localStorage.getItem("token")}/getPref`
         );
         var today = new Date()
         const time = today.getHours() + ':' + today.getMinutes() + ':' + today.getSeconds();
@@ -132,9 +132,9 @@ export default function Dashboard() {
             if (top_recommended === 'EVK') {
                 setTopObj(res4Json[0])
             } else if (top_recommended === 'PKS') {
-                setTopObj(res4Json[0])
+                setTopObj(res4Json[1])
             } else if (top_recommended === 'VLG') {
-                setTopObj(res4Json[0])
+                setTopObj(res4Json[2])
             }
 
             console.log(topObj)

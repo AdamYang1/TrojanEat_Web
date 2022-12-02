@@ -15,12 +15,6 @@ function Prefernces() {
 	const [isSesameClicked, setisSesameClicked] = useState(false);
 	const [isVeganClicked, setisVeganClicked] = useState(false);
 	const [list, setList] = useState([]);
-	useEffect(() => {
-		if (list.length > 5) {
-			alert("NO MORE THAN 4!");
-			return;
-		}
-	}, [list]);
     
 	const update = async (email, pref) => {
 		try {
@@ -37,6 +31,10 @@ function Prefernces() {
 
 	const submitHandler = function (event) {
 		event.preventDefault();
+		if (list.length > 4) {
+			alert("NO MORE THAN 4!");
+			return;
+		}
 		const pref = list.join();
 		console.log(pref);
 		const email = localStorage.getItem("token");
