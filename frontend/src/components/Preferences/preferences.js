@@ -16,7 +16,7 @@ function Prefernces() {
 	const [isVeganClicked, setisVeganClicked] = useState(false);
 	const [list, setList] = useState([]);
 	// useEffect(() => {
-	//  console.log(list);
+	//  // console.log(list);
 	//  if (list.length > 5) {
 	//      alert("NO MORE THAN 4!");
 	//      return;
@@ -25,14 +25,14 @@ function Prefernces() {
 
 	const update = async (email, pref) => {
 		try {
-			console.log(email);
-			console.log(pref);
+			// console.log(email);
+			// console.log(pref);
 			await fetch(
 				`https://trojans-eat.herokuapp.com/api/v1/user/email/${email}/pref/${pref}`,
 				{ method: "PUT" }
 			);
 		} catch (err) {
-			console.log("ERROR");
+			// console.log("ERROR");
 		}
 	};
 
@@ -43,25 +43,25 @@ function Prefernces() {
 			setList([]);
 			return;
 		}
-		// const pref = list.join();
+		const pref = list.join();
 		// console.log(pref);
-		// const email = localStorage.getItem("token");
-		// update(email, pref);
-		// navigate("/Dashboard", { replace: true });
+		const email = localStorage.getItem("token");
+		update(email, pref);
+		navigate("/Dashboard", { replace: true });
 		// console.log("submitted");
 	};
 
 	const onChangeBeef = () => {
-		console.log("clicked beef");
+		// console.log("clicked beef");
 		if (isBeefClicked === false) {
 			let temp = list;
 			temp.push("beef");
-			console.log(temp);
+			// console.log(temp);
 			setList(temp);
-			console.log(list);
+			// console.log(list);
 		} else {
 			let temp = list;
-			console.log(temp);
+			// console.log(temp);
 			setList(temp.filter((item) => item !== "beef"));
 		}
 
@@ -69,7 +69,7 @@ function Prefernces() {
 	};
 
 	const onChangeDairy = () => {
-		console.log("clicked dairy");
+		// console.log("clicked dairy");
 		if (isDairyClicked === false) {
 			let temp = list;
 			temp.push("diary");
@@ -82,12 +82,12 @@ function Prefernces() {
 	};
 
 	const onChange = () => {
-		console.log("clicked");
+		// console.log("clicked");
 		setisClicked((prevState) => !prevState);
 	};
 
 	const onChangeEggs = () => {
-		console.log("clicked eggs");
+		// console.log("clicked eggs");
 		if (isEggsClicked === false) {
 			let temp = list;
 			temp.push("eggs");
@@ -100,7 +100,7 @@ function Prefernces() {
 	};
 
 	const onChangeShellfish = () => {
-		console.log("clicked shellish");
+		// console.log("clicked shellish");
 		if (isShellfishClicked === false) {
 			let temp = list;
 			temp.push("shellfish");
@@ -113,7 +113,7 @@ function Prefernces() {
 	};
 
 	const onChangePork = () => {
-		console.log("clicked pork");
+		// console.log("clicked pork");
 		if (isPorkClicked === false) {
 			let temp = list;
 			temp.push("pork");
@@ -126,7 +126,7 @@ function Prefernces() {
 	};
 
 	const onChangeChicken = () => {
-		console.log("clicked chicken");
+		// console.log("clicked chicken");
 		if (isChickenClicked === false) {
 			let temp = list;
 			temp.push("chicken");
@@ -139,7 +139,7 @@ function Prefernces() {
 	};
 
 	const onChangeFish = () => {
-		console.log("clicked fish");
+		// console.log("clicked fish");
 		if (isFishClicked === false) {
 			let temp = list;
 			temp.push("fish");
@@ -152,7 +152,7 @@ function Prefernces() {
 	};
 
 	const onChangeSesame = () => {
-		console.log("clicked sesame");
+		// console.log("clicked sesame");
 		if (isSesameClicked === false) {
 			let temp = list;
 			temp.push("sesame");
@@ -165,7 +165,7 @@ function Prefernces() {
 	};
 
 	const onChangeVegan = () => {
-		console.log("clicked vegan");
+		// console.log("clicked vegan");
 		if (isVeganClicked === false) {
 			let temp = list;
 			temp.push("vegan");
@@ -183,7 +183,7 @@ function Prefernces() {
 				<h1 className='text-3xl font-bold mx-8 my-2 mt-6 tracking-tight'>
 					Select Your Preferences
 				</h1>
-				<h6 className='mx-8 my-2'>Check all that apply</h6>
+				<h6 className='mx-8 my-2'>Select up to 4 preferences.</h6>
 				<form className='mt-10 mx-8 mb-0 space-y-6' onSubmit={submitHandler}>
 					<div className='grid grid-cols-4 gap-4 justify-content'>
 						{isBeefClicked ? (

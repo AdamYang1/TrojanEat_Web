@@ -44,10 +44,10 @@ export default function Dashboard() {
                 const {data: response} = await axios.get(`https://trojans-eat.herokuapp.com/api/v1/user/email/${localStorage.getItem("token")}/getPref`);
                 let keys = []
                 Object.entries(response).map(([k,v]) => keys.push(k.toLowerCase()));
-                console.log(keys)
+                // console.log(keys)
                 setPrefs(keys);
             } catch (error) {
-                console.error(error.message);
+                // console.error(error.message);
             }
         }
         fetchPrefs()
@@ -59,7 +59,7 @@ export default function Dashboard() {
                 const {data: response} = await axios.get('https://trojans-eat.herokuapp.com/api/v1/menu');
                 setMenu(response);
             } catch (error) {
-                console.error(error.message);
+                // console.error(error.message);
             }
         }
         fetchMenu()
@@ -70,9 +70,9 @@ export default function Dashboard() {
             try {
                 const {data: response} = await axios.get('https://trojans-eat.herokuapp.com/api/v1/dining-halls');
                 setDiningHalls(response);
-                console.log(response)
+                // console.log(response)
             } catch (error) {
-                console.error(error.message);
+                // console.error(error.message);
             }
         }
         fetchDiningHalls()
@@ -88,7 +88,7 @@ export default function Dashboard() {
         var today = new Date();
         const time =
             today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
-        console.log(time);
+        // console.log(time);
 
         const prefJson = await pref.json();
         const prefList = Object.keys(prefJson);
@@ -150,8 +150,8 @@ export default function Dashboard() {
         } else {
             tempTop = top.PKS;
         }
-        console.log("tempTop: ");
-        console.log(tempTop);
+        // console.log("tempTop: ");
+        // console.log(tempTop);
         setMatched(tempTop);
 
         if (tempTop[0].dHall === 'EVK') {
@@ -164,7 +164,7 @@ export default function Dashboard() {
     };
     const fetchAsync = async () => {
         await fetchData();
-        console.log(topObj);
+        // console.log(topObj);
     };
     useEffect(() => {
         fetchAsync();
